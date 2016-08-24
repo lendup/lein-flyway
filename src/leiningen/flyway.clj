@@ -1,7 +1,7 @@
 (ns leiningen.flyway
   (:require [leiningen.core.eval :refer [eval-in-project]]))
 
-(def ^:private CURRENT_VERSION "1.2.0-SNAPSHOT")
+(def ^:private CURRENT_VERSION "1.2.0")
 
 (defn flyway
   "Run the flyway plugin."
@@ -10,7 +10,7 @@
   (let [config (:flyway project)
         subtask-keyword (keyword subtask)]
     (eval-in-project
-     (update-in project [:dependencies] conj ['com.github.metaphor/lein-flyway CURRENT_VERSION])
+     (update-in project [:dependencies] conj ['com.lendup/lein-flyway CURRENT_VERSION])
      `(do
         (let [flyway# (fw/flyway ~config)]
           (case ~subtask-keyword

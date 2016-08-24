@@ -1,21 +1,19 @@
-(defproject com.github.metaphor/lein-flyway "1.2.0-SNAPSHOT"
+(defproject com.lendup/lein-flyway "1.2.0"
   :description "Leiningen Plugin for Database Migration Tool Flyway"
-  :url "https://github.com/metaphor/lein-flyway"
+  :url "https://github.com/lendup/lein-flyway"
   :license {:name "Eclipse Public License - v 1.0"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :min-lein-version "2.0.0"
   :eval-in :leiningen
 
-  :dependencies [[org.flywaydb/flyway-core "3.2.1"]]
+  :aliases {"deploy!" ["do" ["clean"] ["deploy" "lupublish"]]}
 
-  :profiles {:dev {:dependencies [[mysql/mysql-connector-java "5.1.36"]]}}
+  :dependencies [[org.flywaydb/flyway-core "4.0.3"]]
 
-  :plugins [[cider/cider-nrepl "0.10.0-SNAPSHOT"]]
+  :plugins [[s3-wagon-private "1.2.0" :exclusions [commons-codec]]]
 
-
-  :scm {:url "git@github.com:metaphor/lein-flyway.git"}
-  :pom-addition [:developers [:developer
-                              [:name "Zhiheng Li"]
-                              [:url "https://github.com/metaphor"]
-                              [:email "zhiheng.li.metaphor@gmail.com"]
-                              [:timezone "+8"]]])
+  :deploy-repositories [["lupublish" {:url "s3p://lendup.repos/maven/releases/"
+                                      :username :env/MAVEN_AWS_ACCESS_KEY_ID
+                                      :passphrase :env/MAVEN_AWS_SECRET_ACCESS_KEY
+                                      :sign-releases false}]]
+  :eval-in-leiningen true)
